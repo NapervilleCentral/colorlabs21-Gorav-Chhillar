@@ -1,4 +1,3 @@
-
 /**
  * Kevin Hayes
  * Test Picture Classes
@@ -30,21 +29,21 @@ public class TestPicture17
      //Picture apic = new Picture("C:\\Users\\khayes\\Favorites\\Documents\APCS- Java\chap03\Curriclum 2013\Picture Color labs\images\\beach.jpg");
      //Know it, Love it, Live it!!!
      //relative path                    dir/folder/file
-     Picture apic = new Picture("images\\beach.jpg");
-     Picture ferris1 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture ferris2 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture ferris3 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture ferris4 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture ferris5 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture ferris6 = new Picture("images/2000 ferris wheel2.jpg");
-     Picture temple = new Picture("images/temple.jpg");
+     Picture white = new Picture("images\\white.correct.jpg");
+     Picture radience1 = new Picture("images\\radience.jpg");
+     Picture radience2 = new Picture("images\\radience.jpg");
+     Picture radience3 = new Picture("images\\radience.jpg");
+     Picture radience4 = new Picture("images\\radience.jpg");
+     Picture radience5 = new Picture("images\\radience.jpg");
+     Picture radience6 = new Picture("images\\radience.jpg");
+     
      //apic.explore();
      //ferris1.explore();
      //moto.explore();
      //makes an array of pixels
      Pixel[] pixels;
      //gets pixels from picture and assigns to pixels array
-     pixels = ferris1.getPixels();
+     pixels = white.getPixels();
    
      //how many pixels or how large array
     System.out.println("This is a large array"+pixels.length  );
@@ -55,8 +54,8 @@ public class TestPicture17
 
         System.out.println(pixels[17]);
     //access each pixel
-    Pixel spot = ferris1.getPixel(100,100);
-    Pixel spot2 = ferris1.getPixel(433,283);
+    Pixel spot = white.getPixel(100,100);
+    Pixel spot2 = white.getPixel(433,283);
     /*Pixel ferr17 = pixels[17];
    
    
@@ -81,17 +80,17 @@ public class TestPicture17
    
    
     Pixel[] Mpixels;
-    Mpixels = ferris1.getPixels();
+    Mpixels = radience1.getPixels();
     Pixel[] Mpixels2;
-    Mpixels2 = ferris2.getPixels();
+    Mpixels2 = radience2.getPixels();
     Pixel[] Mpixels3;
-    Mpixels3 = ferris3.getPixels();
+    Mpixels3 = radience3.getPixels();
     Pixel[] Mpixels4;
-    Mpixels4 = ferris4.getPixels();
+    Mpixels4 = radience4.getPixels();
     Pixel[] Mpixels5;
-    Mpixels5 = ferris5.getPixels();
+    Mpixels5 = radience5.getPixels();
     Pixel[] Mpixels6;
-    Mpixels6 = ferris6.getPixels();
+    Mpixels6 = radience6.getPixels();
    // pixels[17].setColor(Color.blue);
    // spot.setColor(new Color(252,252,252));
     //pixels[500034].setColor(Color.blue);
@@ -209,13 +208,14 @@ final double  FACTOR = .5;
 
   /**/
     //write/save a picture as a file
-    ferris1.write("images/ferris11.jpg");
-    mirrorVertical(temple);
-    temple.explore();
+    radience1.write("images/radience.jpg");
+    mirrorVertical(radience2);
+    radience2.explore();
     //copytoCanvas(ferris1,640x480);
 
     /**/
   }//main
+  
   public static void mirrorVertical(Picture source){
       int width = source.getWidth();
       int mirrorPoint = 276;//source.getWidth/2
@@ -231,6 +231,7 @@ final double  FACTOR = .5;
           }
       }
   }//mirrorVertical
+  
   //add two ints to params to place the picture you want on the target
   //to make it smaller, do sourceX+=2
   //to make it bigger sourceX+=.5  larger, copies every pixel twice but you have to cast as int in the getPix and setColor
@@ -251,4 +252,198 @@ final double  FACTOR = .5;
           }
       }
   }
+  
+  // recursion
+  /**
+ * Method to recursively copy the picture onto itself
+ * Each recursive call makes the copy smaller
+ */
+public static void recursiveCopy(Picture source, int startX, int startY, int width, int height)
+{
+    // base case: stop when the area gets too small
+    if (width < 20 || height < 20)
+    {
+        return;
+    }
+    
+    Pixel sourcePixel = null;
+    Pixel targetPixel = null;
+    
+    // copy the top-left portion of the current area to the rest of the picture
+    for (int y = startY; y < startY + height; y = y + 2)
+    {
+        for (int x = startX; x < startX + width; x = x + 2)
+        {
+            if (x < source.getWidth() - width/2 && y < source.getHeight() - height/2)
+            {
+                sourcePixel = source.getPixel(x, y);
+                targetPixel = source.getPixel(x + width/2, y + height/2);
+                targetPixel.setColor(sourcePixel.getColor());
+            }
+        }
+    }
+    
+    // recursive call with smaller dimensions
+    recursiveCopy(source, startX, startY, width/2, height/2);
+}
+  public static void grayscale(Picture source)
+{
+    Pixel[] pixels = source.getPixels();
+    for (Pixel p : pixels)
+    {
+        int avg = (int)((p.getRed() + p.getGreen() + p.getBlue()) / 3.0);
+        p.setRed(avg);
+        p.setGreen(avg);
+        p.setBlue(avg);
+    }
+}
+
+/**
+ * Method to negate all colors in a picture
+ * @param source the picture to negate
+ */
+public static void negate(Picture source)
+{
+    Pixel[] pixels = source.getPixels();
+    for (Pixel p : pixels)
+    {
+        p.setRed(255 - p.getRed());
+        p.setGreen(255 - p.getGreen());
+        p.setBlue(255 - p.getBlue());
+    }
+}
+
+/**
+ * Method to apply sepia tint to a picture
+ * @param source the picture to tint
+ */
+public static void sepiaTint(Picture source)
+{
+    Pixel[] pixels = source.getPixels();
+    
+    for (Pixel p : pixels)
+    {
+        int red = p.getRed();
+        int green = p.getGreen();
+        int blue = p.getBlue();
+        
+        int newRed = (int)(0.393 * red + 0.769 * green + 0.189 * blue);
+        int newGreen = (int)(0.349 * red + 0.686 * green + 0.168 * blue);
+        int newBlue = (int)(0.272 * red + 0.534 * green + 0.131 * blue);
+        
+        if (newRed > 255) newRed = 255;
+        if (newGreen > 255) newGreen = 255;
+        if (newBlue > 255) newBlue = 255;
+        
+        p.setRed(newRed);
+        p.setGreen(newGreen);
+        p.setBlue(newBlue);
+    }
+}
+
+/**
+ * Method to posterize a picture (reduce number of colors)
+ * @param source the picture to posterize
+ * @param levels the number of color levels
+ */
+public static void posterize(Picture source, int levels)
+{
+    int rangeSize = 256 / levels;
+    Pixel[] pixels = source.getPixels();
+    
+    for (Pixel p : pixels)
+    {
+        int red = p.getRed() / rangeSize * rangeSize;
+        int green = p.getGreen() / rangeSize * rangeSize;
+        int blue = p.getBlue() / rangeSize * rangeSize;
+        
+        p.setRed(red);
+        p.setGreen(green);
+        p.setBlue(blue);
+    }
+}
+
+/**
+ * Method to do edge detection on a picture
+ * @param source the picture to detect edges on
+ * @param amount the threshold amount
+ */
+public static void edgeDetection(Picture source, double amount)
+{
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    
+    for (int y = 0; y < source.getHeight() - 1; y++)
+    {
+        for (int x = 0; x < source.getWidth(); x++)
+        {
+            topPixel = source.getPixel(x, y);
+            bottomPixel = source.getPixel(x, y + 1);
+            
+            double topAvg = (topPixel.getRed() + topPixel.getGreen() + topPixel.getBlue()) / 3.0;
+            double bottomAvg = (bottomPixel.getRed() + bottomPixel.getGreen() + bottomPixel.getBlue()) / 3.0;
+            
+            if (Math.abs(topAvg - bottomAvg) < amount)
+            {
+                topPixel.setColor(Color.WHITE);
+            }
+            else
+            {
+                topPixel.setColor(Color.BLACK);
+            }
+        }
+    }
+}
+
+/**
+ * Method to mirror a picture horizontally
+ * @param source the picture to mirror
+ */
+public static void mirrorHorizontal(Picture source)
+{
+    int width = source.getWidth();
+    int height = source.getHeight();
+    int mirrorPoint = height / 2;
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    
+    for (int y = 0; y < mirrorPoint; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            topPixel = source.getPixel(x, y);
+            bottomPixel = source.getPixel(x, height - 1 - y);
+            bottomPixel.setColor(topPixel.getColor());
+        }
+    }
+}
+
+/**
+ * Method to blend two pictures together (50% each)
+ * @param source1 the first picture
+ * @param source2 the second picture
+ */
+public static void blend(Picture source1, Picture source2)
+{
+    int width = Math.min(source1.getWidth(), source2.getWidth());
+    int height = Math.min(source1.getHeight(), source2.getHeight());
+    
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            Pixel pixel1 = source1.getPixel(x, y);
+            Pixel pixel2 = source2.getPixel(x, y);
+            
+            int red = (int)(pixel1.getRed() * 0.5 + pixel2.getRed() * 0.5);
+            int green = (int)(pixel1.getGreen() * 0.5 + pixel2.getGreen() * 0.5);
+            int blue = (int)(pixel1.getBlue() * 0.5 + pixel2.getBlue() * 0.5);
+            
+            pixel1.setRed(red);
+            pixel1.setGreen(green);
+            pixel1.setBlue(blue);
+        }
+    }
+}
+
 }
