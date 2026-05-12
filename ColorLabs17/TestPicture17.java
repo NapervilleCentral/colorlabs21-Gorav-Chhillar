@@ -29,7 +29,7 @@ public class TestPicture17
      //Picture apic = new Picture("C:\\Users\\khayes\\Favorites\\Documents\APCS- Java\chap03\Curriclum 2013\Picture Color labs\images\\beach.jpg");
      //Know it, Love it, Live it!!!
      //relative path                    dir/folder/file
-     Picture white = new Picture("images\\white.correct.jpg");
+     Picture white = new Picture("images\\radience.jpg");
      Picture radience1 = new Picture("images\\radience.jpg");
      Picture radience2 = new Picture("images\\radience.jpg");
      Picture radience3 = new Picture("images\\radience.jpg");
@@ -41,21 +41,21 @@ public class TestPicture17
      //ferris1.explore();
      //moto.explore();
      //makes an array of pixels
-     Pixel[] pixels;
+     //Pixel[] pixels;
      //gets pixels from picture and assigns to pixels array
-     pixels = white.getPixels();
+    //pixels = white.getPixels();
    
      //how many pixels or how large array
-    System.out.println("This is a large array"+pixels.length  );
+    //System.out.println("This is a large array"+pixels.length  );
 
 /*
     /**/
         //access each index
 
-        System.out.println(pixels[17]);
+      //  System.out.println(pixels[17]);
     //access each pixel
-    Pixel spot = white.getPixel(100,100);
-    Pixel spot2 = white.getPixel(433,283);
+   // Pixel spot = white.getPixel(100,100);
+   // Pixel spot2 = white.getPixel(433,283);
     /*Pixel ferr17 = pixels[17];
    
    
@@ -79,10 +79,10 @@ public class TestPicture17
  */  
    
    
-    Pixel[] Mpixels;
-    Mpixels = radience1.getPixels();
-    Pixel[] Mpixels2;
-    Mpixels2 = radience2.getPixels();
+   // Pixel[] Mpixels;
+   //  Mpixels = radience1.getPixels();
+   // Pixel[] Mpixels2;
+  //  Mpixels2 = radience2.getPixels();
     Pixel[] Mpixels3;
     Mpixels3 = radience3.getPixels();
     Pixel[] Mpixels4;
@@ -214,9 +214,9 @@ final double  FACTOR = .5;
     //copytoCanvas(ferris1,640x480);
 
     /**/
-  }//main
+ // }//main
   
-  public static void mirrorVertical(Picture source){
+  //public static void mirrorVertical(Picture source){
       int width = source.getWidth();
       int mirrorPoint = 276;//source.getWidth/2
       Pixel leftPixel = null;
@@ -230,12 +230,12 @@ final double  FACTOR = .5;
               rightPixel.setColor(leftPixel.getColor());
           }
       }
-  }//mirrorVertical
+ // }//mirrorVertical
   
   //add two ints to params to place the picture you want on the target
   //to make it smaller, do sourceX+=2
   //to make it bigger sourceX+=.5  larger, copies every pixel twice but you have to cast as int in the getPix and setColor
-  public static void copytoCanvas(Picture source, Picture target){
+  Public static void copytoCanvas(Picture source, Picture target){
       Pixel sourcePix = null;
       Pixel targetPix = null;
      
