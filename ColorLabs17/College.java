@@ -35,7 +35,7 @@ public class College
 
         // edge detection
         Pic edge = new Pic(basePath);
-        edge.edgeDetection(5.0);
+        edge.edgeDetection(12.5);
         canvas.copy(edge, 2 * tileW, tileH);
 
         canvas.write("images/final_collage.jpg");

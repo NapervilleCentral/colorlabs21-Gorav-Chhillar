@@ -212,8 +212,6 @@ public class Pixel
     updatePicture(this.getAlpha(),red,green,blue);
   }
   
- 
-  
   /**
    * Method to update the picture based on the passed color
    * values for this pixel
